@@ -20,7 +20,6 @@ public class WechatUserServiceImpl implements WechatUserService {
     @Autowired
     WechatUserMapper wechatUserMapper;
 
-
     @Override
     public Integer batchInsertWechatUser(List<WechatUserEntity> wechatUserEntities) {
         return wechatUserMapper.batchInsertWechatUser(wechatUserEntities);

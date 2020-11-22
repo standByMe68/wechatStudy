@@ -43,7 +43,7 @@ public class WechatServiceImpl  implements WechatService {
     @Override
     public String getWechatOAAccessToken() {
 
-        //在redis钟获取对应的凭证
+        /*//在redis钟获取对应的凭证
         String access_token_redis = stringRedisTemplate.opsForValue().get(Constants.ACCESS_TOKEN);
 
         if (access_token_redis == null || "".equals(access_token_redis)){
@@ -69,7 +69,29 @@ public class WechatServiceImpl  implements WechatService {
             }
         }else {
             return access_token_redis;
+        }*/
+
+        String appId = wechatProperties.getAppId();
+        String grantType = wechatProperties.getGrantType();
+        String secret = wechatProperties.getSecret();
+        String url = Constants.getAccessTokenURL + "?grant_type=" + grantType + "&appid=" + appId + "&secret=" + secret;
+
+        //解析json获取微信凭证
+        RestTemplate restTemplate = new RestTemplate();
+        String forObject = restTemplate.getForObject(url, String.class);
+        JSONObject jsonObject = JSONObject.parseObject(forObject);
+        Object access_token = jsonObject.get("access_token");
+        if (access_token == null){
+            logger.info("Exception in interface call to get access token，errcode:"+jsonObject.get("errcode"));
+            throw new InterfaceCallException(ErrorConstants.GET_ACCESS_TOKEN_ERROR,ErrorConstants.WECHAT_INTERFACE_ERROR,ErrorConstants.GET_ACCESS_TOKEN_ERROR);
+        }else {
+
+            stringRedisTemplate.opsForValue().set(Constants.ACCESS_TOKEN,(String)access_token,wechatProperties.getAccessTokenTimeout(), TimeUnit.SECONDS);
+
+            return (String) access_token;
         }
+
+
     }
 
     @Override

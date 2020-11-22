@@ -1,9 +1,10 @@
 package com.standbyme.wechatoa.dao;
 
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.standbyme.wechatoa.entity.WechatUserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface WechatUserMapper extends BaseMapper<WechatUserEntity> {
      * @param wechatUserEntities
      * @return
      */
-    Integer batchInsertWechatUser(List<WechatUserEntity> wechatUserEntities);
+    Integer batchInsertWechatUser(@Param("wechatUserEntities") List<WechatUserEntity> wechatUserEntities);
 }

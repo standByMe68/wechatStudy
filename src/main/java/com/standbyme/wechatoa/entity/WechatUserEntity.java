@@ -5,11 +5,12 @@ package com.standbyme.wechatoa.entity;
  * 用于对接数据库
  */
 
+
 public class WechatUserEntity extends WechatBaseUser{
 
     private Integer id;
 
-    private String appId;
+    private String appid;
 
     public Integer getId() {
         return id;
@@ -19,11 +20,11 @@ public class WechatUserEntity extends WechatBaseUser{
         this.id = id;
     }
 
-    public String getAppId() {
-        return appId;
+    public String getAppid() {
+        return appid;
     }
 
     public void setAppId(String appId) {
-        this.appId = appId;
+        this.appid = appId;
     }
 }

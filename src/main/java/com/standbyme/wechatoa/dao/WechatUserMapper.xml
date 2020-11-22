@@ -2,19 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.standbyme.wxgzh.com.jcf.dao.WechatUserMapper">
+<mapper namespace="com.standbyme.wechatoa.dao.WechatUserMapper">
 
-
-    <select id="batchInsertWechatUser" resultType="integer">
-
-        <foreach collection="wechatUserEntities" item="wechatUserEntity" separator=";">
-            INSERT INTO wechat_user(openid,unionid,appid)
-            VALUES(#{wechatUserEntity.openid},#{wechatUserEntity.unionid},#{wechatUserEntity.appid})
+    <select id="batchInsertWechatUser" resultType="java.lang.Integer">
+        INSERT INTO wechat_user(openid,unionid,appid) VALUES
+        <foreach collection="wechatUserEntities" item="wechatUserEntity" separator=",">
+            (#{wechatUserEntity.openid},#{wechatUserEntity.unionid},#{wechatUserEntity.appid})
         </foreach>
-
     </select>
-
-
-
 
 </mapper>
